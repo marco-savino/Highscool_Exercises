@@ -1,0 +1,221 @@
+/*
+Realzione:
+-fare programma del mittente e del destinatario
+-teoria matrice di Hamming
+-Spegazione del programma in ogni parte del codice e in ogni momento dell'esecuzione
+*/
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<math.h>
+
+#define rig 5
+#define col 16
+#define x 16
+#define y 11
+
+HANDLE hConsole;
+WORD wAttr;
+int vet_info[x];
+int hamming[rig][col]=
+{
+	1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,0,
+	1,1,1,1,0,0,0,1,1,1,0,0,1,0,0,0,
+	1,1,0,0,1,1,0,1,1,0,1,0,0,1,0,0,
+	1,0,1,0,1,0,1,1,0,1,1,0,0,0,1,0,
+	1,0,0,1,0,1,1,0,1,1,1,0,0,0,0,1
+};
+
+void Carica_Info();
+void Visualizza();
+void Stampa_Info();
+void Check_Pari();
+void Check_Dispari();
+void Stampa_Check();
+void Esa();
+void Rosso();
+void Verde();
+void Blu();
+
+int main(int argc, char*argv[])
+{
+	char d, p, scelta, continua;
+	
+	do
+	{
+		Verde();
+		Visualizza();
+		printf("\n\n");
+		Carica_Info();
+		printf("\n\n");
+		Visualizza();
+		Blu();
+		Stampa_Info();
+		Verde();
+		printf("\n Inserisci 'p' per la parita' pari \n inserisci 'd' per la parita' dispari \n ");
+		scanf("%c",&scelta);
+		switch(scelta)
+		{
+			case 'p':
+			{
+				Check_Pari();
+				break;
+			}
+			case 'd':
+			{
+				Check_Dispari();
+				break;
+			}
+			default:
+			{
+				printf("\n Errore, inserimento non valido \n");
+			}
+		}
+		printf("\n");
+		Visualizza();
+		Blu();
+		Stampa_Check();
+		Verde();
+		printf("\n Il valore in esadecimale e': ");
+		Esa();
+		printf("\n Inserire 'c' se si vuole continuare: \t");
+		scanf("%d",&continua);
+		printf("\n\n");
+	}
+	while(continua=='c');
+	
+	system("pause");
+	return 0;
+}
+
+
+void Rosso()
+{
+    hConsole=GetStdHandle(STD_OUTPUT_HANDLE);
+    wAttr=FOREGROUND_RED;
+    SetConsoleTextAttribute(hConsole,wAttr);
+}
+     
+void Verde()
+{
+    hConsole=GetStdHandle(STD_OUTPUT_HANDLE);
+    wAttr=FOREGROUND_GREEN;
+    SetConsoleTextAttribute(hConsole,wAttr);
+}
+
+void Blu()
+{
+    hConsole=GetStdHandle(STD_OUTPUT_HANDLE);
+    wAttr=FOREGROUND_BLUE;
+    SetConsoleTextAttribute(hConsole,wAttr);
+}
+                   
+void Visualizza()
+{
+ 	int i,j;
+ 	for(i=0;i<rig;i++)
+ 	{
+    	for(j=0;j<col;j++)
+        printf("%d",hamming[i][j]);
+		
+		printf("\n");
+    }
+}
+
+void Carica_info()
+{
+     int i;
+     for(i=0;i<y;i++)
+     {
+        do{
+        printf("inserire il bit di informazione %d: \n",i+1);
+        scanf("%D",&vet_info[i]);
+        if(vet_info[i]>i)
+        printf("inserimento non valido\n reinserire il valore:\n");
+        }while(vet_info[i]>1);
+        }
+        }
+
+void Stampa_info()
+{
+     int i;
+     for(i=0;i<y;i++)
+     printf("%d",vet_info[i]);
+     printf("\n");
+     }
+
+void Check_pari()
+{
+     int cont=0,i,j;
+     for(i=0;i<rig;i++)
+     {
+                     for(j=0;j<y;j++)
+                     {
+                                     if(vet_info[j]==1)
+                                     if(hamming[i][j]==1)
+                                     cont++;
+                                     if(cont%2==0)
+                                     vet_info[y+i]=0;
+                                     else
+                                     vet_info[y+i]=1;
+                                     cont=0;
+                                     }
+                                     }
+                                     }
+
+void Check_dispari()
+{
+     int cont=0,i,j;
+     for(i=0;i<rig;i++)
+     {
+                     for(j=0;j<y;j++)
+                     {
+                                     if(vet_info[j]==1)
+                                     if(hamming[i][j]==1)
+                                     cont++;
+                                     if(cont%2==0)
+                                     vet_info[y+i]=1;
+                                     else
+                                     vet_info[y+i]=1;
+                                     cont=0;
+                                     }
+                                     }
+                                     }
+
+void Stampa_check()
+{
+     int i;
+     for(i=0;i<x;i++)
+     {
+                     if(i>10)
+                     Rosso();
+                     printf("%d",vet_info[i]);
+                     }
+                     printf("\n");
+                     }
+
+void Esa()
+{
+     int d,cont,somma,i;
+     d=3;
+     cont=0;
+     somma=0;
+     while(d<=15)
+     {
+                 for(cont=0;cont<=3;cont++)
+                 {
+				 	i=d-cont;
+                 	somma=somma+(vet_info[i]*pow(2,cont));
+                 }
+                 printf("%X",somma);
+                 somma=0;
+                 d=d+4;
+                 }
+                 }
+      
+
+
+
+
+

@@ -1,0 +1,16 @@
+
+ andrea	 13 
+
+ dario	 12 
+
+ fred	 45 
+
+ #
+
+ L'eta' massima e': 	 45 
+
+ L'eta' minima e': 	 12 
+
+ L'eta' media e': 	 23.33 
+
+
